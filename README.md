@@ -7,7 +7,7 @@ Supports most image formats.
 - Build the DLL (or join the Discord server and download it) and place the DLL in the Mods folder
 - Start the game and go to the UserData folder
 - Check the MelonPreferences.cfg file in the UserData folder and modify the settings to your liking
-- Place your custom images and your custom quotes (make sure to use the .txt file extension) in the folders that are listed in the MelonPreferences.cfg file, any other file names will be available on all other non-bound images
+- Place your custom images and your custom quotes (make sure to use the .txt file extension for the quotes) in the folders that are listed in the MelonPreferences.cfg file, any other file names will be available on all other non-bound images
 - To bind certain quotes to specific images, use the same file name (e.g. picture1.png and picture1.txt)
 - Quotes are separated by a new line
 ## Dependencies
