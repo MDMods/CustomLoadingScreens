@@ -15,6 +15,7 @@ Supports most image formats.
 - [Muse Dash on Steam](https://store.steampowered.com/app/774171/Muse_Dash/)
 ## Building
 - Install MelonLoader into Muse Dash and run it once
+- Add the path of your Muse Dash installation folder as an environment variable named "MD_DIRECTORY"
 - Build tested with Visual Studio 2022, MelonLoader 0.6.1, Muse Dash 4.1.0
 - DO NOT use MelonLoader 0.6.2, it is incredibly broken
 ## Credits & Contributions
