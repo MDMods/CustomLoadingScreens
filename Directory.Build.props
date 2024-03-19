@@ -1,0 +1,56 @@
+<Project>
+  <PropertyGroup>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <ClearOutputDirectory>False</ClearOutputDirectory>
+    <GameFolder Condition="Exists('$(MD_NET6_DIRECTORY)')">$(MD_NET6_DIRECTORY)</GameFolder>
+    <GameFolder Condition="Exists('$(MD_DIRECTORY)')">$(MD_DIRECTORY)</GameFolder>
+    <MelonLoader>$(GameFolder)\MelonLoader\</MelonLoader>
+    <MelonNET6>$(MelonLoader)\net6\</MelonNET6>
+    <MelonAssemblies>$(MelonLoader)\Il2CppAssemblies\</MelonAssemblies>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <SpecificVersion>false</SpecificVersion>
+      <Private>false</Private>
+      <HintPath>$(MelonAssemblies)\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-CSharp-firstpass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <SpecificVersion>false</SpecificVersion>
+      <Private>false</Private>
+      <HintPath>$(MelonAssemblies)\Assembly-CSharp-firstpass.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2Cppmscorlib, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <SpecificVersion>false</SpecificVersion>
+      <Private>false</Private>
+      <HintPath>$(MelonAssemblies)\Il2Cppmscorlib.dll</HintPath>
+    </Reference>
+    <Reference Include="MelonLoader, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <SpecificVersion>false</SpecificVersion>
+      <Private>false</Private>
+      <HintPath>$(MelonNET6)\MelonLoader.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppInterop.Runtime, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <SpecificVersion>false</SpecificVersion>
+      <Private>false</Private>
+      <HintPath>$(MelonNET6)\Il2CppInterop.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="0Harmony, Version=2.9.0.0, Culture=neutral, PublicKeyToken=null">
+      <SpecificVersion>false</SpecificVersion>
+      <Private>false</Private>
+      <HintPath>$(MelonNET6)\0Harmony.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <SpecificVersion>false</SpecificVersion>
+      <Private>false</Private>
+      <HintPath>$(MelonAssemblies)\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <SpecificVersion>false</SpecificVersion>
+      <Private>false</Private>
+      <HintPath>$(MelonAssemblies)\UnityEngine.UI.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <PropertyGroup>
+    <OutputPath>$(MsBuildThisFileDirectory)\Output\$(Configuration)\</OutputPath>
+  </PropertyGroup>
+</Project>
