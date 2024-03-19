@@ -1,7 +1,5 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using CustomLoadingScreens;
 using MelonLoader;
 
 // General Information about an assembly is controlled through the following
@@ -16,7 +14,7 @@ using MelonLoader;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
-[assembly: MelonInfo(typeof(CustomLoadingScreens.Main), "CustomLoadingScreens", "1.0.0", "Mr. Talk")]
+[assembly: MelonInfo(typeof(CustomLoadingScreens.Main), "CustomLoadingScreens", "1.1.0", "Mr. Talk")]
 [assembly: MelonGame("PeroPeroGames", "MuseDash")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
@@ -37,5 +35,5 @@ using MelonLoader;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.1.0.0")]
+[assembly: AssemblyFileVersion("1.1.0.0")]

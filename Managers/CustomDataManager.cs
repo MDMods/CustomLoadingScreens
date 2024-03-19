@@ -1,6 +1,5 @@
 ﻿using CustomLoadingScreens.Data;
 using CustomLoadingScreens.Utilities;
-using Il2Cpp;
 
 namespace CustomLoadingScreens.Managers
 {
@@ -9,6 +8,7 @@ namespace CustomLoadingScreens.Managers
         private const string JpgSearchPattern = "*.jpg";
         private const string PngSearchPattern = "*.png";
         private const string TxtSearchPattern = "*.txt";
+        private const string GifSearchPattern = "*.gif";
 
         internal static readonly List<CustomImage> CustomImages = new();
         internal static readonly List<string> CustomQuotes = new();
@@ -41,7 +41,8 @@ namespace CustomLoadingScreens.Managers
         internal static void LoadImages()
         {
             var imageFiles = Directory.EnumerateFiles(ModSettings.CustomImageFolder, JpgSearchPattern)
-                .Concat(Directory.EnumerateFiles(ModSettings.CustomImageFolder, PngSearchPattern));
+                .Concat(Directory.EnumerateFiles(ModSettings.CustomImageFolder, PngSearchPattern))
+                .Concat(Directory.EnumerateFiles(ModSettings.CustomImageFolder, GifSearchPattern));
             foreach (var image in imageFiles)
             {
                 AddImage(image);

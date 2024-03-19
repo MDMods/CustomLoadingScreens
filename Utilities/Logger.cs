@@ -22,7 +22,7 @@ namespace CustomLoadingScreens.Utilities
             _logger.Msg(ConsoleColor.Yellow, "Warning: " + message);
         }
 
-        public void Error(string message)
+        public void Error(object message)
         {
             _logger.Msg(ConsoleColor.Red, "ERROR: " + message);
         }

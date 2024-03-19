@@ -1,8 +1,6 @@
 ﻿using CustomLoadingScreens.Managers;
 using HarmonyLib;
 using Il2Cpp;
-using Il2CppAssets.Scripts.PeroTools.Commons;
-using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using UnityEngine;
 using UnityEngine.UI;
 using Logger = CustomLoadingScreens.Utilities.Logger;
@@ -11,7 +9,6 @@ namespace CustomLoadingScreens.Patches
 {
     internal class LoadingImagePatch
     {
-
         /// <summary>
         ///     This HarmonyPatch class does all the work for setting the custom backgrounds and text.
         /// </summary>
@@ -19,7 +16,7 @@ namespace CustomLoadingScreens.Patches
         internal class LoadingImgPatch
         {
             private static readonly Logger Logger = new(nameof(LoadingImgPatch));
-            private static bool Is43AspectRatio(double width, double height) => width % height / height <= 1.7; 
+            private static bool Is43AspectRatio(double width, double height) => width % height / height <= 1.7;
             private static void Postfix(ref LoadingImg __instance)
             {
 
@@ -27,7 +24,7 @@ namespace CustomLoadingScreens.Patches
                 if (ProbabilityManager.UseCustomImage && CustomDataManager.CustomImages.Any())
                 {
                     var customImage = ProbabilityManager.GetRandomImage();
-                    Il2CppArrayBase<Image> components;
+                    Main.CurrentCustomImage = customImage;
 
                     __instance.simpleIllus.SetActive(false);
                     __instance.specialIllus.SetActive(false);
@@ -35,21 +32,21 @@ namespace CustomLoadingScreens.Patches
                     __instance.specialIllusfor43.SetActive(false);
 
                     // Deal with the specialIllus variables, respective of aspect ratio
-                    if (Is43AspectRatio(customImage.Sprite.texture.width, customImage.Sprite.texture.height))
+                    if (Is43AspectRatio(customImage.Sprites[0].texture.width, customImage.Sprites[0].texture.height))
                     {
                         __instance.specialIllusfor43.SetActive(true);
-                        components = __instance.specialIllusfor43.GetComponents<Image>();
+                        Main.Images = __instance.specialIllusfor43.GetComponents<Image>();
                     }
                     else
                     {
                         __instance.specialIllus.SetActive(true);
-                        components = __instance.simpleIllus.GetComponents<Image>();
+                        Main.Images = __instance.simpleIllus.GetComponents<Image>();
                     }
 
                     // Sets all image components in the Illus to the custom image
-                    foreach (var image in components)
+                    foreach (var image in Main.Images)
                     {
-                        image.sprite = customImage.Sprite;
+                        image.sprite = customImage.Sprites[0];
                     }
 
                     // We can only use bound quotes if that image exists, bound quotes will always be displayed
@@ -84,6 +81,24 @@ namespace CustomLoadingScreens.Patches
                 }
 
                 Logger.Msg("Custom random loading text has been loaded.");
+            }
+
+            /// <summary>
+            ///     Adds support for GIF images.
+            /// </summary>
+            internal static void Update()
+            {
+                if (Main.CurrentCustomImage is null || Main.Images == null || Main.CurrentCustomImage.FramesPerSecond == 0) return;
+                
+                var frame = (int)Mathf.Floor(Time.time * 1000) %
+                    (Main.CurrentCustomImage.FramesPerSecond * Main.CurrentCustomImage.FrameCount) / Main.CurrentCustomImage.FramesPerSecond;
+
+                // Updates animated loading screens
+                foreach (var compImage in Main.Images)
+                {
+                    if (compImage == null) return;
+                    compImage.sprite = Main.CurrentCustomImage.Sprites[frame];
+                }
             }
         }
     }
