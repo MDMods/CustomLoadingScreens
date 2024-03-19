@@ -25,6 +25,7 @@ namespace CustomLoadingScreens.Managers
         /// <returns>A random custom loading screen image.</returns>
         internal static CustomImage GetRandomImage() =>
             CustomDataManager.CustomImages[Rng.Next(CustomDataManager.CustomImages.Count)];
+        
         /// <summary>
         ///     Gets a random custom loading screen quote.
         /// </summary>

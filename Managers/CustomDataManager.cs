@@ -86,6 +86,5 @@ namespace CustomLoadingScreens.Managers
         /// <returns>The number of custom loading quotes.</returns>
         internal static int GetNumberOfQuotes() =>
             BoundQuotes.Select(kv => kv.Value.Count).Sum() + CustomQuotes.Count;
-
     }
 }
