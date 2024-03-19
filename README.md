@@ -1,7 +1,7 @@
 [![](https://dcbadge.vercel.app/api/server/mdmc)](https://discord.gg/mdmc)
 # CustomLoadingScreens
 Allows for loading custom loading screen pictures and custom loading screen quotes.  
-Supports PNG and JPG image formats.
+Supports PNG, JPG, and GIF image formats.
 ## Usage
 - Install MelonLoader into Muse Dash based on the dependency listed below
 - Build the DLL (or join the Discord server and download it) and place the DLL in the Mods folder
