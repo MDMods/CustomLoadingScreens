@@ -9,6 +9,7 @@ Supports most image formats.
 - Check the MelonPreferences.cfg file in the UserData folder and modify the settings to your liking
 - Place your custom images and your custom quotes (make sure to use the .txt file extension) in the folders that are listed in the MelonPreferences.cfg file, any other file names will be available on all other non-bound images
 - To bind certain quotes to specific images, use the same file name (e.g. picture1.png and picture1.txt)
+- Quotes are separated by a new line
 ## Dependencies
 - [MelonLoader](https://github.com/LavaGang/MelonLoader/releases) v0.6.1
 - [Muse Dash on Steam](https://store.steampowered.com/app/774171/Muse_Dash/)
