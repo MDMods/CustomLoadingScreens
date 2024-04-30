@@ -24,14 +24,14 @@ namespace CustomLoadingScreens.Managers
         /// </summary>
         /// <returns>A random custom loading screen image.</returns>
         internal static CustomImage GetRandomImage() =>
-            CustomDataManager.CustomImages[Rng.Next(CustomDataManager.CustomImages.Count)];
+            !CustomDataManager.CustomImages.Any() ? null : CustomDataManager.CustomImages[Rng.Next(CustomDataManager.CustomImages.Count)];
         
         /// <summary>
         ///     Gets a random custom loading screen quote.
         /// </summary>
         /// <returns>A random custom loading screen quote.</returns>
         internal static string GetRandomQuote() =>
-            CustomDataManager.CustomQuotes[Rng.Next(CustomDataManager.CustomQuotes.Count)];
+            !CustomDataManager.CustomQuotes.Any() ? null : CustomDataManager.CustomQuotes[Rng.Next(CustomDataManager.CustomQuotes.Count)];
 
         /// <summary>
         ///     Gets a random custom bound loading screen quote.

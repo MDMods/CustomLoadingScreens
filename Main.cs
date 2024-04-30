@@ -11,7 +11,7 @@ namespace CustomLoadingScreens
     public class Main : MelonMod
     {
         private static readonly Logger Logger = new("CustomLoadingScreens");
-        internal static Il2CppArrayBase<Image> Images;
+        internal static Image Image;
         internal static CustomImage CurrentCustomImage;
         public override void OnInitializeMelon()
         {

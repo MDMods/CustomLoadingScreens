@@ -1,4 +1,5 @@
-﻿using CustomLoadingScreens.Managers;
+﻿using CustomLoadingScreens.Data;
+using CustomLoadingScreens.Managers;
 using HarmonyLib;
 using Il2Cpp;
 using UnityEngine;
@@ -19,11 +20,11 @@ namespace CustomLoadingScreens.Patches
             private static bool Is43AspectRatio(double width, double height) => width % height / height <= 1.7;
             private static void Postfix(ref LoadingImg __instance)
             {
-
                 // Rolled a custom image and we have a custom image
-                if (ProbabilityManager.UseCustomImage && CustomDataManager.CustomImages.Any())
+                if (ProbabilityManager.UseCustomImage)
                 {
                     var customImage = ProbabilityManager.GetRandomImage();
+                    if (customImage is null) return;
                     Main.CurrentCustomImage = customImage;
 
                     __instance.simpleIllus.SetActive(false);
@@ -35,28 +36,22 @@ namespace CustomLoadingScreens.Patches
                     if (Is43AspectRatio(customImage.Sprites[0].texture.width, customImage.Sprites[0].texture.height))
                     {
                         __instance.specialIllusfor43.SetActive(true);
-                        Main.Images = __instance.specialIllusfor43.GetComponents<Image>();
+                        Main.Image = __instance.specialIllusfor43.GetComponent<Image>();
                     }
                     else
                     {
                         __instance.specialIllus.SetActive(true);
-                        Main.Images = __instance.simpleIllus.GetComponents<Image>();
+                        Main.Image = __instance.simpleIllus.GetComponent<Image>();
                     }
 
-                    // Sets all image components in the Illus to the custom image
-                    foreach (var image in Main.Images)
-                    {
-                        image.sprite = customImage.Sprites[0];
-                    }
+                    // Set image component in the Illus to the custom image
+                    Main.Image.sprite = customImage.Sprites[0];
 
                     // We can only use bound quotes if that image exists, bound quotes will always be displayed
                     if (customImage.HasBoundQuote)
                     {
                         var randomBound = ProbabilityManager.GetRandomBoundQuote(customImage.Name);
-                        foreach (var text in __instance.GetComponentsInChildren<Text>())
-                        {
-                            text.text = randomBound;
-                        }
+                        __instance.GetComponentInChildren<Text>().text = randomBound;
                         Logger.Msg("Custom loading screen with bound text has been loaded.");
                         return;
                     }
@@ -74,12 +69,11 @@ namespace CustomLoadingScreens.Patches
                     return;
                 }
 
-                // Rolled a random quote
-                foreach (var text in __instance.GetComponentsInChildren<Text>())
-                {
-                    text.text = ProbabilityManager.GetRandomQuote();
-                }
+                var quote = ProbabilityManager.GetRandomQuote();
+                if (quote is null) return;
 
+                // Rolled a random quote
+                __instance.GetComponentInChildren<Text>().text = quote;
                 Logger.Msg("Custom random loading text has been loaded.");
             }
 
@@ -88,17 +82,14 @@ namespace CustomLoadingScreens.Patches
             /// </summary>
             internal static void Update()
             {
-                if (Main.CurrentCustomImage is null || Main.Images == null || Main.CurrentCustomImage.FramesPerSecond == 0) return;
+                if (Main.CurrentCustomImage is null || Main.Image == null || Main.CurrentCustomImage.FramesPerSecond is 0) return;
                 
                 var frame = (int)Mathf.Floor(Time.time * 1000) %
                     (Main.CurrentCustomImage.FramesPerSecond * Main.CurrentCustomImage.FrameCount) / Main.CurrentCustomImage.FramesPerSecond;
 
                 // Updates animated loading screens
-                foreach (var compImage in Main.Images)
-                {
-                    if (compImage == null) return;
-                    compImage.sprite = Main.CurrentCustomImage.Sprites[frame];
-                }
+                if (Main.Image == null) return;
+                Main.Image.sprite = Main.CurrentCustomImage.Sprites[frame];
             }
         }
     }
