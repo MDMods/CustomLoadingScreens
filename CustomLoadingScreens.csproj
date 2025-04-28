@@ -7,19 +7,12 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Platforms>AnyCPU;x64</Platforms>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Directory.Build.props" />
     <None Remove="SetPath.cmd" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="ILRepack.Lib.MSBuild.Task" Version="2.0.26">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.3" />
   </ItemGroup>
 
   <Target Name="ILRepacker" AfterTargets="Build">
@@ -32,10 +25,9 @@
       <IlRepackLibs Include="$(OutputPath)" />
       <IlRepackLibs Include="$(MelonNET6)" />
     </ItemGroup>
-    <ILRepack LibraryPath="@(IlRepackLibs)" OutputFile="$(OutputPath)\$(AssemblyName).dll" InputAssemblies="@(InputAssemblies)" Parallel="true" />
   </Target>
   
-  <Target Name="ILRepackCopy" AfterTargets="ILRepacker" Condition="'$(WORKER)' != 'GitHub'">
+  <Target Name="ILRepackCopy" AfterTargets="Build" Condition="'$(WORKER)' != 'GitHub'">
     <Copy SourceFiles="$(OutputPath)\$(AssemblyName).dll" DestinationFolder="$(GameFolder)\Mods" />
     <Message Text="Copied DLL -&gt; $(GameFolder)\Mods\$(ProjectName).dll" Importance="High" />
   </Target>

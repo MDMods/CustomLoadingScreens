@@ -1,10 +1,12 @@
-﻿using CustomLoadingScreens.Data;
+﻿using CustomLoadingScreens.Utilities;
+using CustomLoadingScreens.Data;
 
 namespace CustomLoadingScreens.Managers
 {
-    internal class ProbabilityManager
+    internal static class ProbabilityManager
     {
         private static readonly Random Rng = new();
+        private static readonly Logger Logger = new(nameof(ProbabilityManager));
 
         /// <summary>
         ///     Calculates whether the loading image should be custom. 
@@ -16,8 +18,7 @@ namespace CustomLoadingScreens.Managers
         ///     Calculates whether the loading quote should be custom. 
         /// </summary>
         /// <returns><c>true</c> if the loading quote should be custom, <c>false</c> otherwise.</returns>
-        internal static bool UseCustomQuote() =>
-            ModSettings.CustomQuoteProbability > Rng.NextDouble();
+        internal static bool UseCustomQuote => ModSettings.CustomQuoteProbability > Rng.NextDouble();
 
         /// <summary>
         ///     Gets a random custom loading screen image.
@@ -40,5 +41,9 @@ namespace CustomLoadingScreens.Managers
         /// <returns>A random custom bound loading screen quote.</returns>
         internal static string GetRandomBoundQuote(string fileName) =>
             CustomDataManager.BoundQuotes[fileName][Rng.Next(CustomDataManager.BoundQuotes[fileName].Count)];
+
+        internal static string GetRandomAlbumBoundQuote(string albumName) =>
+            CustomDataManager.AlbumBoundQuotes[albumName]
+                [Rng.Next(CustomDataManager.AlbumBoundQuotes[albumName].Count)];
     }
 }

@@ -6,6 +6,7 @@
     <GameFolder Condition="Exists('$(MD_DIRECTORY)')">$(MD_DIRECTORY)</GameFolder>
     <MelonLoader>$(GameFolder)\MelonLoader\</MelonLoader>
     <MelonNET6>$(MelonLoader)\net6\</MelonNET6>
+    <ModFolder>$(GameFolder)\Mods\</ModFolder>
     <MelonAssemblies>$(MelonLoader)\Il2CppAssemblies\</MelonAssemblies>
   </PropertyGroup>
   <ItemGroup>
@@ -34,6 +35,11 @@
       <Private>false</Private>
       <HintPath>$(MelonNET6)\Il2CppInterop.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="CustomAlbums, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <SpecificVersion>false</SpecificVersion>
+      <Private>false</Private>
+      <HintPath>$(ModFolder)\CustomAlbums.dll</HintPath>
+    </Reference>
     <Reference Include="0Harmony, Version=2.9.0.0, Culture=neutral, PublicKeyToken=null">
       <SpecificVersion>false</SpecificVersion>
       <Private>false</Private>
@@ -48,6 +54,11 @@
       <SpecificVersion>false</SpecificVersion>
       <Private>false</Private>
       <HintPath>$(MelonAssemblies)\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VideoModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <SpecificVersion>false</SpecificVersion>
+      <Private>false</Private>
+      <HintPath>$(MelonAssemblies)\UnityEngine.VideoModule.dll</HintPath>
     </Reference>
   </ItemGroup>
   <PropertyGroup>

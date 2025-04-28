@@ -1,18 +1,34 @@
 ﻿using CustomLoadingScreens.Data;
 using CustomLoadingScreens.Utilities;
+using CustomAlbums.Utilities;
+using SixLabors.ImageSharp;
+using Logger = CustomLoadingScreens.Utilities.Logger;
+using UnityEngine;
 
 namespace CustomLoadingScreens.Managers
 {
-    internal class CustomDataManager
+    internal static class CustomDataManager
     {
         private const string JpgSearchPattern = "*.jpg";
         private const string PngSearchPattern = "*.png";
         private const string TxtSearchPattern = "*.txt";
         private const string GifSearchPattern = "*.gif";
+        private const string WebmSearchPattern = "*.webm";
+        private const string Mp4SearchPattern = "*.mp4";
 
+        internal static readonly List<string> ImageVideoSearchPatterns = new()
+        {
+            JpgSearchPattern,
+            PngSearchPattern,
+            GifSearchPattern,
+            WebmSearchPattern,
+            Mp4SearchPattern
+        };
         internal static readonly List<CustomImage> CustomImages = new();
         internal static readonly List<string> CustomQuotes = new();
         internal static readonly Dictionary<string, List<string>> BoundQuotes = new();
+        internal static readonly Dictionary<string, CustomImage> AlbumBoundImages = new();
+        internal static readonly Dictionary<string, List<string>> AlbumBoundQuotes = new();
         internal static readonly Logger Logger = new(nameof(CustomDataManager));
 
         /// <summary>
@@ -24,6 +40,12 @@ namespace CustomLoadingScreens.Managers
         {
             if (!BoundQuotes.ContainsKey(imageName)) BoundQuotes.Add(imageName, new List<string>());
             BoundQuotes[imageName].Add(quote);
+        }
+
+        private static void AddAlbumBoundQuote(string albumName, string quote)
+        {
+            if (!AlbumBoundQuotes.ContainsKey(albumName)) AlbumBoundQuotes.Add(albumName, new List<string>());
+            AlbumBoundQuotes[albumName].Add(quote);
         }
 
         /// <summary>
@@ -40,12 +62,12 @@ namespace CustomLoadingScreens.Managers
         /// </summary>
         internal static void LoadImages()
         {
-            var imageFiles = Directory.EnumerateFiles(ModSettings.CustomImageFolder, JpgSearchPattern)
-                .Concat(Directory.EnumerateFiles(ModSettings.CustomImageFolder, PngSearchPattern))
-                .Concat(Directory.EnumerateFiles(ModSettings.CustomImageFolder, GifSearchPattern));
+            var imageFiles = ImageVideoSearchPatterns
+                .SelectMany(pattern => Directory.EnumerateFiles(ModSettings.CustomImageFolder, pattern));
             foreach (var image in imageFiles)
             {
-                AddImage(image);
+                if (image.EndsWith(".mp4")) Logger.Error("Found mp4!");
+                AddImage(Path.GetFullPath(image));
             }
         }
 
@@ -81,11 +103,20 @@ namespace CustomLoadingScreens.Managers
             }
         }
 
+        internal static void AddAlbumBoundQuotes(string albumName, Stream stream)
+        {
+            using var streamReader = new StreamReader(stream);
+            while (streamReader.ReadLine()?.Trim() is { } line)
+            {
+                AddAlbumBoundQuote(albumName, line);
+            }
+        }
+
         /// <summary>
         ///     Gets the number of custom loading quotes.
         /// </summary>
         /// <returns>The number of custom loading quotes.</returns>
-        internal static int GetNumberOfQuotes() =>
+        internal static int GetNumberOfQuotes =>
             BoundQuotes.Select(kv => kv.Value.Count).Sum() + CustomQuotes.Count;
     }
 }
