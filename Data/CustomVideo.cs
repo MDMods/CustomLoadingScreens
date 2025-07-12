@@ -17,7 +17,7 @@ namespace CustomLoadingScreens.Data
             Texture = new RenderTexture(1920, 1080, 0);
             Texture.Create();
 
-            Logger.Error("Going to play " + videoPath);
+            Logger.Msg("Going to play " + videoPath);
 
             // Create VideoPlayer
             Player = canvas.AddComponent<VideoPlayer>();
