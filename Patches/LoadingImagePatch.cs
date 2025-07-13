@@ -96,9 +96,10 @@ namespace CustomLoadingScreens.Patches
 
                 if (isQuoteBound)
                 {
-                    Logger.Error("Quote bound!");
-                    __instance.GetComponentInChildren<Text>().text =
-                        ProbabilityManager.GetRandomAlbumBoundQuote(quoteAlbumName);
+                    var randomQuote = ProbabilityManager.GetRandomAlbumBoundQuote(quoteAlbumName);
+                    Logger.Msg($"Quote bound: {randomQuote}");
+                    __instance.GetComponentInChildren<Text>().text = randomQuote;
+                        
                     return;
                 }
 

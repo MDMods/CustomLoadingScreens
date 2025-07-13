@@ -66,7 +66,6 @@ namespace CustomLoadingScreens.Managers
                 .SelectMany(pattern => Directory.EnumerateFiles(ModSettings.CustomImageFolder, pattern));
             foreach (var image in imageFiles)
             {
-                if (image.EndsWith(".mp4")) Logger.Error("Found mp4!");
                 AddImage(Path.GetFullPath(image));
             }
         }
